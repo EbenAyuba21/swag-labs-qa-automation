@@ -1,0 +1,749 @@
+{
+	"info": {
+		"_postman_id": "9ebbe605-8be6-4177-9307-3f7f0f1d50ed",
+		"name": "Petstore API Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20878764"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"item": [
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status is 200\", function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body is has required fields\", function(){\r",
+									"    const responseBody = pm.response.json()\r",
+									"    pm.expect(responseBody).to.be.an(\"object\")\r",
+									"    pm.expect(responseBody).to.have.property(\"code\")\r",
+									"    pm.expect(responseBody).to.have.property(\"type\")\r",
+									"    pm.expect(responseBody).to.have.property(\"message\")\r",
+									"\r",
+									"    pm.expect(responseBody.code).to.be.a(\"number\")\r",
+									"    pm.expect(responseBody.type).to.be.a(\"string\")\r",
+									"    pm.expect(responseBody.message).to.be.a(\"string\")\r",
+									"\r",
+									"    pm.collectionVariables.set(\"user_id\", responseBody.message)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body is accurate\", function(){\r",
+									"    const responseBody = pm.response.json()\r",
+									"    pm.expect(responseBody.code).to.equal(200)\r",
+									"    pm.expect(responseBody.type).to.equal(\"unknown\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is less than 1s\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000)\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 10004,\r\n  \"username\": \"strad\",\r\n  \"firstName\": \"billing\",\r\n  \"lastName\": \"astray\",\r\n  \"email\": \"someEmail@gmail.com\",\r\n  \"password\": \"password\",\r\n  \"phone\": \"+23490637947\",\r\n  \"userStatus\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User with Array",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Reponse is includes required fields\", function(){\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.be.an(\"object\")\r",
+									"    pm.expect(Object.keys(response).length).to.equal(3)\r",
+									"\r",
+									"    pm.expect(response).to.have.property(\"code\")\r",
+									"    pm.expect(response).to.have.property(\"type\")\r",
+									"    pm.expect(response).to.have.property(\"message\")\r",
+									"\r",
+									"    pm.expect(response.code).to.be.a(\"number\")\r",
+									"    pm.expect(response.type).to.be.a(\"string\")\r",
+									"    pm.expect(response.message).to.be.a(\"string\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response is valid and accurate\", function(){\r",
+									"    const response = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(response.code).to.equal(200)\r",
+									"    pm.expect(response.type).to.equal(\"unknown\")\r",
+									"    pm.expect(response.message).to.equal(\"ok\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is less than 1s\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000)\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id\": 10002,\r\n        \"username\": \"user1\",\r\n        \"firstName\": \"dolanl\",\r\n        \"lastName\": \"thrip\",\r\n        \"email\": \"anotherEmail@gmail.com\",\r\n        \"password\": \"password\",\r\n        \"phone\": \"+23490637947\",\r\n        \"userStatus\": 1\r\n    },\r\n    {\r\n        \"id\": 10003,\r\n        \"username\": \"user2\",\r\n        \"firstName\": \"tolanl\",\r\n        \"lastName\": \"gaius\",\r\n        \"email\": \"thirdEmail@gmail.com\",\r\n        \"password\": \"password\",\r\n        \"phone\": \"+23490637947\",\r\n        \"userStatus\": 1\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user/createWithArray",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"createWithArray"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User with List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Reponse is includes required fields\", function(){\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.be.an(\"object\")\r",
+									"    pm.expect(Object.keys(response).length).to.equal(3)\r",
+									"\r",
+									"    pm.expect(response).to.have.property(\"code\")\r",
+									"    pm.expect(response).to.have.property(\"type\")\r",
+									"    pm.expect(response).to.have.property(\"message\")\r",
+									"\r",
+									"    pm.expect(response.code).to.be.a(\"number\")\r",
+									"    pm.expect(response.type).to.be.a(\"string\")\r",
+									"    pm.expect(response.message).to.be.a(\"string\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response is valid and accurate\", function(){\r",
+									"    const response = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(response.code).to.equal(200)\r",
+									"    pm.expect(response.type).to.equal(\"unknown\")\r",
+									"    pm.expect(response.message).to.equal(\"ok\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is less than 1s\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000)\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id\": 10010,\r\n        \"username\": \"user10\",\r\n        \"firstName\": \"jesse\",\r\n        \"lastName\": \"mack\",\r\n        \"email\": \"jessemack@gmail.com\",\r\n        \"password\": \"password\",\r\n        \"phone\": \"+23490637947\",\r\n        \"userStatus\": 1\r\n    },\r\n    {\r\n        \"id\": 10011,\r\n        \"username\": \"user11\",\r\n        \"firstName\": \"ryan\",\r\n        \"lastName\": \"gosling\",\r\n        \"email\": \"tyangosling@gmail.com\",\r\n        \"password\": \"password\",\r\n        \"phone\": \"+23490637947\",\r\n        \"userStatus\": 1\r\n    },\r\n    {\r\n        \"id\": 10012,\r\n        \"username\": \"user12\",\r\n        \"firstName\": \"jesse\",\r\n        \"lastName\": \"mack\",\r\n        \"email\": \"jessemack@gmail.com\",\r\n        \"password\": \"password\",\r\n        \"phone\": \"+23490637947\",\r\n        \"userStatus\": 1\r\n    },\r\n    {\r\n        \"id\": 10013,\r\n        \"username\": \"user13\",\r\n        \"firstName\": \"ryan\",\r\n        \"lastName\": \"gosling\",\r\n        \"email\": \"tyangosling@gmail.com\",\r\n        \"password\": \"password\",\r\n        \"phone\": \"+23490637947\",\r\n        \"userStatus\": 1\r\n    },\r\n    {\r\n        \"id\": 10014,\r\n        \"username\": \"user14\",\r\n        \"firstName\": \"jesse\",\r\n        \"lastName\": \"mack\",\r\n        \"email\": \"jessemack@gmail.com\",\r\n        \"password\": \"password\",\r\n        \"phone\": \"+23490637947\",\r\n        \"userStatus\": 1\r\n    },\r\n    {\r\n        \"id\": 10015,\r\n        \"username\": \"user15\",\r\n        \"firstName\": \"ryan\",\r\n        \"lastName\": \"gosling\",\r\n        \"email\": \"tyangosling@gmail.com\",\r\n        \"password\": \"password\",\r\n        \"phone\": \"+23490637947\",\r\n        \"userStatus\": 1\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user/createWithList",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"createWithList"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get User",
+			"item": [
+				{
+					"name": "Get User Successfully",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response has required fields\", function(){\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.be.an(\"object\")\r",
+									"    pm.expect(Object.keys(response).length).to.equal(8)\r",
+									"\r",
+									"    pm.expect(response).to.have.property(\"id\")\r",
+									"    pm.expect(response).to.have.property(\"username\")\r",
+									"    pm.expect(response).to.have.property(\"firstName\")\r",
+									"    pm.expect(response).to.have.property(\"lastName\")\r",
+									"    pm.expect(response).to.have.property(\"email\")\r",
+									"    pm.expect(response).to.have.property(\"password\")\r",
+									"    pm.expect(response).to.have.property(\"phone\")\r",
+									"    pm.expect(response).to.have.property(\"userStatus\")\r",
+									"    \r",
+									"    pm.expect(response.id).to.be.a(\"number\")\r",
+									"    pm.expect(response.username).to.be.a(\"string\")\r",
+									"    pm.expect(response.firstName).to.be.a(\"string\")\r",
+									"    pm.expect(response.lastName).to.be.a(\"string\")\r",
+									"    pm.expect(response.email).to.be.a(\"string\")\r",
+									"    pm.expect(response.password).to.be.a(\"string\")\r",
+									"    pm.expect(response.phone).to.be.a(\"string\")\r",
+									"    pm.expect(response.userStatus).to.be.a(\"number\")\r",
+									"\r",
+									"    pm.collectionVariables.set(\"user3_id\", response.id)\r",
+									"    pm.collectionVariables.set(\"user3_username\", response.username)\r",
+									"    pm.collectionVariables.set(\"user3_email\", response.email)\r",
+									"    pm.collectionVariables.set(\"user3_status\", response.userStatus)\r",
+									"    pm.collectionVariables.set(\"user3_phone\", response.phone)\r",
+									"    pm.collectionVariables.set(\"user3_firstName\", response.firstName)\r",
+									"    pm.collectionVariables.set(\"user3_lastName\", response.lastName)\r",
+									"    pm.collectionVariables.set(\"user3_password\", response.password)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}user/user3",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"user3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User with Non-existent Username",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response has required fields\", function(){\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.be.an(\"object\")\r",
+									"    pm.expect(Object.keys(response).length).to.equal(3)\r",
+									"\r",
+									"    pm.expect(response).to.have.property(\"code\")\r",
+									"    pm.expect(response).to.have.property(\"type\")\r",
+									"    pm.expect(response).to.have.property(\"message\")\r",
+									"    \r",
+									"    pm.expect(response.code).to.be.a(\"number\")\r",
+									"    pm.expect(response.type).to.be.a(\"string\")\r",
+									"    pm.expect(response.message).to.be.a(\"string\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Reponse is valid and accurate\", function(){\r",
+									"    const response = pm.response.json();\r",
+									"\r",
+									"    pm.expect(response.code).to.equal(1)\r",
+									"    pm.expect(response.type).to.equal(\"error\")\r",
+									"    pm.expect(response.message).to.equal(\"User not found\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}user/non-existent",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"non-existent"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Update User",
+			"item": [
+				{
+					"name": "Update User Successfully",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status is 200\", function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body has required fields\", function(){\r",
+									"    const responseBody = pm.response.json()\r",
+									"    pm.expect(responseBody).to.be.an(\"object\")\r",
+									"    pm.expect(responseBody).to.have.property(\"code\")\r",
+									"    pm.expect(responseBody).to.have.property(\"type\")\r",
+									"    pm.expect(responseBody).to.have.property(\"message\")\r",
+									"\r",
+									"    pm.expect(responseBody.code).to.be.a(\"number\")\r",
+									"    pm.expect(responseBody.type).to.be.a(\"string\")\r",
+									"    pm.expect(responseBody.message).to.be.a(\"string\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body is accurate\", function(){\r",
+									"    const responseBody = pm.response.json()\r",
+									"    pm.expect(responseBody.code).to.equal(200)\r",
+									"    pm.expect(responseBody.type).to.equal(\"unknown\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is less than 1s\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000)\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"still_user2\",\r\n    \"firstname\": \"NewFirstName\",\r\n    \"lastName\": \"NewLastName\",\r\n    \"email\": \"yapp@gmail.com\",\r\n    \"password\": \"pantry1234\",\r\n    \"phone\": \"+344449090900\",\r\n    \"userStatus\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user/user2",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"user2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login User",
+			"item": [
+				{
+					"name": "Login User Successfully",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status is 200\", function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body is has required fields\", function(){\r",
+									"    const responseBody = pm.response.json()\r",
+									"    pm.expect(responseBody).to.be.an(\"object\")\r",
+									"    pm.expect(responseBody).to.have.property(\"code\")\r",
+									"    pm.expect(responseBody).to.have.property(\"type\")\r",
+									"    pm.expect(responseBody).to.have.property(\"message\")\r",
+									"\r",
+									"    pm.expect(responseBody.code).to.be.a(\"number\")\r",
+									"    pm.expect(responseBody.type).to.be.a(\"string\")\r",
+									"    pm.expect(responseBody.message).to.be.a(\"string\")\r",
+									"\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body is accurate\", function(){\r",
+									"    const responseBody = pm.response.json()\r",
+									"    pm.expect(responseBody.code).to.equal(200)\r",
+									"    pm.expect(responseBody.type).to.equal(\"unknown\")\r",
+									"    pm.expect(responseBody.message).to.include(\"logged in user session:\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is less than 1s\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000)\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}user/login?username={{user3_username}}&password={{user3_password}}",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "{{user3_username}}"
+								},
+								{
+									"key": "password",
+									"value": "{{user3_password}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete User",
+			"item": [
+				{
+					"name": "Successfully Delete a User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status is 200\", function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body is has required fields\", function(){\r",
+									"    const responseBody = pm.response.json()\r",
+									"    pm.expect(responseBody).to.be.an(\"object\")\r",
+									"    pm.expect(responseBody).to.have.property(\"code\")\r",
+									"    pm.expect(responseBody).to.have.property(\"type\")\r",
+									"    pm.expect(responseBody).to.have.property(\"message\")\r",
+									"\r",
+									"    pm.expect(responseBody.code).to.be.a(\"number\")\r",
+									"    pm.expect(responseBody.type).to.be.a(\"string\")\r",
+									"    pm.expect(responseBody.message).to.be.a(\"string\")\r",
+									"\r",
+									"    pm.collectionVariables.set(\"user_id\", responseBody.message)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response body is accurate\", function(){\r",
+									"    const responseBody = pm.response.json()\r",
+									"    pm.expect(responseBody.code).to.equal(200)\r",
+									"    pm.expect(responseBody.type).to.equal(\"unknown\")\r",
+									"    pm.expect(responseBody.message).to.equal(\"user8\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is less than 1s\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000)\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}user/user8",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"user8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a non Existent User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status is 404\", function(){\r",
+									"    pm.response.to.have.status(404)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is less than 1s\", function(){\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000)\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}user/user4",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"user4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logout User",
+			"item": [
+				{
+					"name": "Logout User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Reponse is includes required fields\", function(){\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.be.an(\"object\")\r",
+									"    pm.expect(Object.keys(response).length).to.equal(3)\r",
+									"\r",
+									"    pm.expect(response).to.have.property(\"code\")\r",
+									"    pm.expect(response).to.have.property(\"type\")\r",
+									"    pm.expect(response).to.have.property(\"message\")\r",
+									"\r",
+									"    pm.expect(response.code).to.be.a(\"number\")\r",
+									"    pm.expect(response.type).to.be.a(\"string\")\r",
+									"    pm.expect(response.message).to.be.a(\"string\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response is valid and accurate\", function(){\r",
+									"    const response = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(response.code).to.equal(200)\r",
+									"    pm.expect(response.type).to.equal(\"unknown\")\r",
+									"    pm.expect(response.message).to.equal(\"ok\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is less than 1s\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000)\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user/logout",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "user_id",
+			"value": ""
+		},
+		{
+			"key": "base_url",
+			"value": "https://petstore.swagger.io/v2/",
+			"type": "string"
+		},
+		{
+			"key": "user2_id",
+			"value": ""
+		},
+		{
+			"key": "user2_username",
+			"value": ""
+		},
+		{
+			"key": "user2_email",
+			"value": ""
+		},
+		{
+			"key": "user2_status",
+			"value": ""
+		},
+		{
+			"key": "user2_phone",
+			"value": ""
+		},
+		{
+			"key": "user2_firstName",
+			"value": ""
+		},
+		{
+			"key": "user2_lastName",
+			"value": ""
+		},
+		{
+			"key": "user2_password",
+			"value": ""
+		},
+		{
+			"key": "user3_id",
+			"value": ""
+		},
+		{
+			"key": "user3_username",
+			"value": ""
+		},
+		{
+			"key": "user3_email",
+			"value": ""
+		},
+		{
+			"key": "user3_status",
+			"value": ""
+		},
+		{
+			"key": "user3_phone",
+			"value": ""
+		},
+		{
+			"key": "user3_firstName",
+			"value": ""
+		},
+		{
+			"key": "user3_lastName",
+			"value": ""
+		},
+		{
+			"key": "user3_password",
+			"value": ""
+		}
+	]
+}

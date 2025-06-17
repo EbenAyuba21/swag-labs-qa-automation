@@ -1,8 +1,8 @@
 # swag-labs-qa-automation
 
-# 🧪 Saucedemo Automation Test Suite
+# 🧪 Saucedemo and Petstore Automation Test Suite
 
-This is an automated UI test suite  functionality on [Saucedemo](https://www.saucedemo.com/) using **Selenium WebDriver**, **TestNG**, and the **Page Object Model** design pattern.
+This project contains both **UI automation tests** and **API tests** for the [Saucedemo](https://www.saucedemo.com/) and [Swagger PetStore](https://petstore.swagger.io/#/user) respectively
 
 ---
 
@@ -16,6 +16,7 @@ This is an automated UI test suite  functionality on [Saucedemo](https://www.sau
 - Page Object Model (POM)
 - Git
 - Eclipse
+- Postman
 
 ---
 
@@ -42,7 +43,7 @@ password=secret_sauce
 ```
 
 
-## 🚀 How to Run Tests
+## 🚀 How to Run UI Automation Tests
 ▶️ Option 1: Run via Eclipse
 
 - Right-click testng.xml → Run As → TestNG Suite.
@@ -52,6 +53,24 @@ password=secret_sauce
 ```bash
 mvn clean test
 ```
+
+## ▶️ How to Run API Tests with Postman
+1. Open Postman.
+2. Import the `Petstore_API_Test.postman_collection.json` collection.
+3. Run requests individually or as a collection via the **Runner** tab.
+
+### 🔄 Run from CLI using Newman
+1. Install Newman (if you haven’t already):
+
+```bash
+npm install -g newman
+```
+2. Run the collection:
+
+```bash
+newman run Petstore_API_Test.postman_collection.json
+```
+
 
 ## 👨‍💻 Author
 Ebenezer Ayuba – QA Engineer
